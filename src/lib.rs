@@ -12,17 +12,10 @@ mod sys {
         pub fn new() -> Fs;
 
         #[wasm_bindgen(method)]
-        pub fn read_binary(fs: &Fs, path: &str) -> Option<Box<[u8]>>;
+        pub fn read(fs: &Fs, path: &str) -> Option<String>;
 
         #[wasm_bindgen(method)]
         pub fn write(fs: &Fs, path: &str, content: &[u8]);
-    }
-
-    impl Fs {
-        pub fn read(&self, path: &str) -> Option<String> {
-            self.read_binary(path)
-                .map(|bytes| String::from_utf16le_lossy(&bytes))
-        }
     }
 }
 
@@ -36,10 +29,6 @@ mod sys {
         }
 
         pub fn read(&self, _path: &str) -> Option<String> {
-            unimplemented!()
-        }
-
-        pub fn read_binary(&self, _path: impl AsRef<str>) -> Option<Box<[u8]>> {
             unimplemented!()
         }
 
@@ -60,11 +49,6 @@ impl Fs {
     #[inline(always)]
     pub fn read(&self, path: impl AsRef<str>) -> Option<String> {
         self.0.read(path.as_ref())
-    }
-
-    #[inline(always)]
-    pub fn read_binary(&self, path: impl AsRef<str>) -> Option<Box<[u8]>> {
-        self.0.read_binary(path.as_ref())
     }
 
     #[inline(always)]
