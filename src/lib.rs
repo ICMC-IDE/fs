@@ -4,7 +4,7 @@
 mod sys {
     use wasm_bindgen::prelude::*;
 
-    #[wasm_bindgen(raw_module = "../../fs.js")]
+    #[wasm_bindgen(module = "fs")]
     extern "C" {
         pub type Fs;
 
@@ -16,6 +16,12 @@ mod sys {
 
         #[wasm_bindgen(method)]
         pub fn write(fs: &Fs, path: &str, content: &[u8]);
+
+        #[wasm_bindgen(method)]
+        pub fn delete(fs: &Fs, path: &str);
+
+        #[wasm_bindgen(method)]
+        pub fn files(fs: &Fs) -> Vec<String>;
     }
 }
 
@@ -33,6 +39,14 @@ mod sys {
         }
 
         pub fn write(&mut self, _path: &str, _content: impl AsRef<[u8]>) {
+            unimplemented!()
+        }
+
+        pub fn delete(&mut self, _path: &str) {
+            unimplemented!()
+        }
+
+        pub fn files(&self) -> Vec<String> {
             unimplemented!()
         }
     }
@@ -54,5 +68,15 @@ impl Fs {
     #[inline(always)]
     pub fn write(&mut self, path: impl AsRef<str>, content: impl AsRef<[u8]>) {
         self.0.write(path.as_ref(), content.as_ref())
+    }
+
+    #[inline(always)]
+    pub fn delete(&mut self, path: impl AsRef<str>) {
+        self.0.delete(path.as_ref())
+    }
+
+    #[inline(always)]
+    pub fn files(&mut self) -> Vec<String> {
+        self.0.files()
     }
 }
