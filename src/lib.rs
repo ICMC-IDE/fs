@@ -1,4 +1,5 @@
 #![feature(str_from_utf16_endian)]
+pub use sys::Fs;
 
 #[cfg(target_family = "wasm")]
 mod sys {
@@ -38,7 +39,7 @@ mod sys {
             unimplemented!()
         }
 
-        pub fn write(&mut self, _path: &str, _content: impl AsRef<[u8]>) {
+        pub fn write(&mut self, _path: &str, _content: &[u8]) {
             unimplemented!()
         }
 
@@ -49,34 +50,5 @@ mod sys {
         pub fn files(&self) -> Vec<String> {
             unimplemented!()
         }
-    }
-}
-
-pub struct Fs(sys::Fs);
-
-impl Fs {
-    #[inline(always)]
-    pub fn new() -> Self {
-        Self(sys::Fs::new())
-    }
-
-    #[inline(always)]
-    pub fn read(&self, path: impl AsRef<str>) -> Option<String> {
-        self.0.read(path.as_ref())
-    }
-
-    #[inline(always)]
-    pub fn write(&mut self, path: impl AsRef<str>, content: impl AsRef<[u8]>) {
-        self.0.write(path.as_ref(), content.as_ref())
-    }
-
-    #[inline(always)]
-    pub fn delete(&mut self, path: impl AsRef<str>) {
-        self.0.delete(path.as_ref())
-    }
-
-    #[inline(always)]
-    pub fn files(&mut self) -> Vec<String> {
-        self.0.files()
     }
 }
