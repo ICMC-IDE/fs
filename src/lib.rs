@@ -1,11 +1,12 @@
 #![feature(str_from_utf16_endian)]
+
 pub use sys::Fs;
 
 #[cfg(target_family = "wasm")]
 mod sys {
     use wasm_bindgen::prelude::*;
 
-    #[wasm_bindgen(module = "fs")]
+    #[wasm_bindgen(raw_module = "../scripts/fs.js")]
     extern "C" {
         pub type Fs;
 
