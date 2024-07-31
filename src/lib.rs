@@ -1,5 +1,3 @@
-#![feature(str_from_utf16_endian)]
-
 pub use sys::Fs;
 
 #[cfg(target_family = "wasm")]
