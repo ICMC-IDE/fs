@@ -27,6 +27,10 @@ mod sys {
 
 #[cfg(not(target_family = "wasm"))]
 mod sys {
+    use wasm_bindgen::prelude::*;
+
+    // so the compiler doesn't complain when compiling to non wasm targets
+    #[wasm_bindgen]
     pub struct Fs {}
 
     impl Fs {
