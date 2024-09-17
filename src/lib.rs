@@ -27,6 +27,9 @@ mod sys {
 
 #[cfg(not(target_family = "wasm"))]
 mod sys {
+    use std::fs;
+    use std::fs::File;
+    use std::io::{Read, Write};
     use wasm_bindgen::prelude::*;
 
     // so the compiler doesn't complain when compiling to non wasm targets
@@ -38,16 +41,22 @@ mod sys {
             Self {}
         }
 
-        pub fn read(&self, _path: &str) -> Option<String> {
-            unimplemented!()
+        pub fn read(&self, path: &str) -> Option<String> {
+            let mut file = File::open(path).unwrap();
+            let mut content = String::new();
+            file.read_to_string(&mut content).unwrap();
+            Some(content)
         }
 
-        pub fn write(&mut self, _path: &str, _content: &[u8]) {
-            unimplemented!()
+        pub fn write(&mut self, path: &str, content: &[u8]) -> std::io::Result<()> {
+            let mut file = fs::File::create(path)?;
+            file.write_all(content)?;
+            Ok(())
         }
 
-        pub fn delete(&mut self, _path: &str) {
-            unimplemented!()
+        pub fn delete(&mut self, path: &str) -> std::io::Result<()> {
+            fs::remove_file(path)?;
+            Ok(())
         }
 
         pub fn files(&self) -> Vec<String> {
