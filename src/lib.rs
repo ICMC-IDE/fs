@@ -30,10 +30,7 @@ mod sys {
     use std::fs;
     use std::fs::File;
     use std::io::{Read, Write};
-    use wasm_bindgen::prelude::*;
 
-    // so the compiler doesn't complain when compiling to non wasm targets
-    #[wasm_bindgen]
     pub struct Fs {}
 
     impl Fs {
