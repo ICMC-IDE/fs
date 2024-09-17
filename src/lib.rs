@@ -30,7 +30,10 @@ mod sys {
     use std::fs;
     use std::fs::File;
     use std::io::{Read, Write};
+    use wasm_bindgen::prelude::*;
 
+    // This is a dummy struct to mimic the behavior of the wasm version
+    #[wasm_bindgen]
     pub struct Fs {}
 
     impl Fs {
