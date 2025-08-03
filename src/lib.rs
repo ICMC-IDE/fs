@@ -4,7 +4,7 @@ pub use sys::Fs;
 mod sys {
     use wasm_bindgen::prelude::*;
 
-    #[wasm_bindgen(raw_module = "../scripts/resources/fs.ts")]
+    #[wasm_bindgen(raw_module = "../fs.ts")]
     extern "C" {
         pub type Fs;
 
